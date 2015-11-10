@@ -14,6 +14,7 @@ typedef struct node
 Linkedlist linklist_create_head(void);
 Linkedlist linklist_create_tail(void);
 int linklist_print(Linkedlist head);
+void linklist_print_reverse(Linkedlist head);
 int linklist_reverse(Linkedlist head);
 Linkedlist linklist_insert(Linkedlist head, int location, ElemType value);
 Linkedlist delete_elem_by_value(Linkedlist head, ElemType value);
@@ -26,7 +27,7 @@ char get_char(void);
 //
 int linklist_reverse(Linkedlist head)
 {
-    if(NULL==head->next)
+    if(NULL==head || NULL==head->next)
     {
         printf("The list is null.\n");
         return 0;  
@@ -49,7 +50,7 @@ int linklist_reverse(Linkedlist head)
 //
 int linklist_print(Linkedlist head)
 {
-    if(NULL==head->next)
+    if(NULL==head || NULL==head->next)
     {
         printf("The list is null.\n");
         return 0;  
@@ -65,10 +66,44 @@ int linklist_print(Linkedlist head)
         return 0;
 }
 
+//
+void linklist_print_reverse(Linkedlist head)
+{
+    if(NULL!=head){
+        if(head->next!=NULL){
+            linklist_print_reverse(head->next);
+        }
+    printf("%d ",head->value);
+    }
+}
+    
+/*
+void linklist_print_reverse2(Linkedlist head)
+{
+    std::stack<Linkedlist> list;
+    
+    Node *p=head;
+    while(p!==NULL)
+    {
+        list.push(p);
+        p=p->next;
+    }
 
+    while(!list.empty())
+    {
+        p=list.top();
+        printf("%d ",p->value);
+        list.pop();
+    }
+}
+*/
+
+//
 Linkedlist linklist_create_head(void)
 {
     Node *head=(Node *)malloc(sizeof(Node)); //create head node and head pointer
+    if(NULL==head)
+        return head;
     head->next=NULL;
 
     int i=0;
@@ -95,6 +130,8 @@ Linkedlist linklist_create_head(void)
 Linkedlist linklist_create_tail(void)
 {
     Node *head=(Node *)malloc(sizeof(Node));//create head node and head pointer
+    if(NULL==head)
+        return head;
     head->next=NULL;
     Node *tail=head; //tail pointer
 
@@ -138,7 +175,7 @@ Linkedlist linklist_insert(Linkedlist head, int location, ElemType value)
 //
 Linkedlist delete_elem_by_value(Linkedlist head, ElemType value)
 {
-    if(NULL==head->next)
+    if(NULL==head || NULL==head->next)
     {
          printf("The list is NULL!\n");
          return NULL;
@@ -164,7 +201,7 @@ Linkedlist delete_elem_by_value(Linkedlist head, ElemType value)
 //
 Node *get_elem_by_location(Linkedlist head, int location)
 {
-    if(NULL==head->next)  //list is NULL 
+    if(NULL==head || NULL==head->next)  //list is NULL 
     {
          printf("The list is NULL!\n");
          return NULL;
@@ -191,7 +228,7 @@ Node *get_elem_by_location(Linkedlist head, int location)
 //
 Node *get_elem_by_value(Linkedlist head, ElemType value)
 {
-    if(NULL==head->next)  //list is NULL 
+    if(NULL==head || NULL==head->next)  //list is NULL 
     {
          printf("The list is NULL!\n");
          return NULL;
@@ -281,7 +318,8 @@ int main()
             g ----> get element by giving value\n\
             l ----> get element by giving location\n\
             r ----> reverse link list\n\
-            s ----> show link list\n\
+            p ----> print link list\n\
+            P ----> print reverse link list\n\
             i ----> insert node to link list\n\
             d ----> delete node from link list\n");
         b=get_char();
@@ -306,8 +344,18 @@ int main()
                 linklist_reverse(ph);
                 linklist_print(ph);
                 break;
-            case 's':
+            case 'p':
                 linklist_print(ph);
+                break;
+            case 'P':
+                if(NULL==ph || NULL==ph)  //list is NULL
+                {
+                     printf("The list is NULL!\n");
+                     break;
+                }
+                printf("reverse linklist:  ");
+                linklist_print_reverse(ph->next);
+                printf("\n");
                 break;
             case 'd':
                 printf("Please input value of node to delete:\n");
