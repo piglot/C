@@ -15,7 +15,7 @@ Linkedlist linklist_create_head(void);
 Linkedlist linklist_create_tail(void);
 int linklist_print(Linkedlist head);
 void linklist_print_reverse(Linkedlist head);
-int linklist_reverse(Linkedlist head);
+Linkedlist linklist_reverse(Linkedlist head);
 Linkedlist linklist_insert(Linkedlist head, int location, ElemType value);
 Linkedlist delete_elem_by_value(Linkedlist head, ElemType value);
 Linkedlist delete_elem_by_location(Linkedlist head, ElemType value);
@@ -25,12 +25,12 @@ int get_int(void);
 char get_char(void);
 
 //
-int linklist_reverse(Linkedlist head)
+Linkedlist linklist_reverse(Linkedlist head)
 {
     if(NULL==head || NULL==head->next)
     {
         printf("The list is null.\n");
-        return 0;  
+        return head;  
     }
     Node *p,*q,*r;
     p=head->next;
@@ -44,7 +44,7 @@ int linklist_reverse(Linkedlist head)
         q=r;
     }
     head->next=p;
-    return 0;
+    return head;
 }
 
 //
